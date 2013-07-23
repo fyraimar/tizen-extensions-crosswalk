@@ -41,6 +41,7 @@
 
   'includes': {
     'notification/notification.gypi',
+    'system_info/system_info.gypi',
     'time/time.gypi',
   },
 }

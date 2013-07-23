@@ -1,0 +1,33 @@
+<h1>Hello Tizen-WRT</h1>
+
+<body>
+<textarea cols=50 rows=20 id="output"></textarea>
+<br>
+<button id="battery_btn">Battery</button>
+</body>
+
+<script>
+
+var output = document.getElementById("output");
+
+function handle(button, callback) {
+    var b = document.getElementById(button);
+    b.addEventListener("click", callback);
+}
+
+function onErrorCallback(error) {
+  output.value = '\n An error occurred: ' + error.message + '\n';
+}
+
+handle("battery_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "BATTERY",
+    function(battery) {
+      output.value = '\n The battery level is ' + battery.level + '\n';
+      var is_charging = battery.isCharging ? 'charging' : 'not charging';
+      output.value += '\n The battery is ' + is_charging + '\n';
+    },
+    onErrorCallback);
+});
+
+</script>
