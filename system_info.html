@@ -9,6 +9,8 @@
 <button id="display_btn">Display</button>
 <button id="device_orientation_btn">Device Orientation</button>
 <button id="build_btn">Build</button>
+<br>
+<button id="locale_btn">Locale</button>
 </body>
 
 <script>
@@ -96,4 +98,15 @@ handle("build_btn", function() {
     },
     onErrorCallback);
 });
+
+handle("locale_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "LOCALE",
+    function(locale) {
+      output.value = '\n language: ' + locale.language +
+                     '\n country: ' + locale.country;
+    },
+    onErrorCallback);
+});
+
 </script>

@@ -141,6 +141,20 @@ void SystemInfoContext::GetBuild(picojson::value& error,
   // error_map["message"] = picojson::value("Get Display failed.");
 }
 
+void SystemInfoContext::GetLocale(picojson::value& error,
+                                  picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  data_map["language"] = picojson::value("zh_CN");
+  data_map["country"] = picojson::value("PRC");
+  error_map["message"] = picojson::value("");
+
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get Display failed.");
+}
+
 void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
                                                picojson::value& output) {
   picojson::value error;
@@ -166,6 +180,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
     GetDeviceOrientation(error, data);
   } else if (prop == "BUILD") {
     GetBuild(error, data);
+  } else if (prop == "LOCALE") {
+    GetLocale(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }
