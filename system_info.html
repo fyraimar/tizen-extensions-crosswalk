@@ -12,6 +12,7 @@
 <br>
 <button id="locale_btn">Locale</button>
 <button id="network_btn">Network</button>
+<button id="wifi_network_btn">Wifi Network</button>
 </body>
 
 <script>
@@ -115,6 +116,19 @@ handle("network_btn", function() {
     "NETWORK",
     function(network) {
       output.value = '\n networkType: ' + network.networkType;
+    },
+    onErrorCallback);
+});
+
+handle("wifi_network_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "WIFI_NETWORK",
+    function(wifi) {
+      output.value = '\n status: ' + wifi.status +
+                     '\n ssid: ' + wifi.ssid +
+                     '\n ipAddress: ' + wifi.ipAddress +
+                     '\n ipv6Address: ' + wifi.ipv6Address +
+                     '\n signalStrength: ' + wifi.signalStrength;
     },
     onErrorCallback);
 });
