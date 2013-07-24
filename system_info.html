@@ -8,6 +8,7 @@
 <button id="storage_btn">Storage</button>
 <button id="display_btn">Display</button>
 <button id="device_orientation_btn">Device Orientation</button>
+<button id="build_btn">Build</button>
 </body>
 
 <script>
@@ -81,6 +82,17 @@ handle("device_orientation_btn", function() {
     function(orientation) {
       output.value = '\n status: ' + orientation.status +
                      '\n isAutoRotation: ' + orientation.isAutoRotation;
+    },
+    onErrorCallback);
+});
+
+handle("build_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "BUILD",
+    function(build) {
+      output.value = '\n model: ' + build.model +
+                     '\n manufacturer: ' + build.manufacturer +
+                     '\n buildVersion: ' + build.buildVersion;
     },
     onErrorCallback);
 });

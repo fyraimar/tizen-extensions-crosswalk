@@ -120,10 +120,27 @@ void SystemInfoContext::GetDeviceOrientation(picojson::value& error,
   // FIXME(halton): Add actual implementation
   data_map["status"] = picojson::value("PORTRAIT_PRIMARY");
   data_map["isAutoRotation"] = picojson::value(false);
+  error_map["message"] = picojson::value("");
 
   // uncomment out below line to try error
   // error_map["message"] = picojson::value("Get Display failed.");
 }
+
+void SystemInfoContext::GetBuild(picojson::value& error,
+                                 picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  data_map["model"] = picojson::value("Tizen PC");
+  data_map["manufacturer"] = picojson::value("Intel Corp.");
+  data_map["buildVersion"] = picojson::value("3.0");
+  error_map["message"] = picojson::value("");
+
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get Display failed.");
+}
+
 void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
                                                picojson::value& output) {
   picojson::value error;
@@ -147,6 +164,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
     GetDisplay(error, data);
   } else if (prop == "DEVICE_ORIENTATION ") {
     GetDeviceOrientation(error, data);
+  } else if (prop == "BUILD") {
+    GetBuild(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }
