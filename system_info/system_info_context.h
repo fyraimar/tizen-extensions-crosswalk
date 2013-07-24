@@ -42,6 +42,8 @@ class SystemInfoContext {
                   picojson::value& data);
   void GetWifiNetwork(picojson::value& error,
                       picojson::value& data);
+  void GetCellularNetwork(picojson::value& error,
+                          picojson::value& data);
 
   ContextAPI* api_;
 };

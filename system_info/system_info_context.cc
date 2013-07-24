@@ -184,6 +184,30 @@ void SystemInfoContext::GetWifiNetwork(picojson::value& error,
   // uncomment out below line to try error
   // error_map["message"] = picojson::value("Get Display failed.");
 }
+
+void SystemInfoContext::GetCellularNetwork(picojson::value& error,
+                                           picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  data_map["status"] = picojson::value("ON");
+  data_map["apn"] = picojson::value("China Mobile");
+  data_map["ipAddress"] = picojson::value("192.168.11.5");
+  data_map["ipv6Address"] = picojson::value("fe80::250:56ff:fec0:8");
+  data_map["mcc"] = picojson::value((double)50);
+  data_map["mnc"] = picojson::value((double)51);
+  data_map["cellId"] = picojson::value((double)52);
+  data_map["lac"] = picojson::value((double)53);
+  data_map["isRoaming"] = picojson::value(true);
+  data_map["isFlightMode"] = picojson::value(false);
+  data_map["imei"] = picojson::value("fake imei - 32324877989");
+  error_map["message"] = picojson::value("");
+
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get Display failed.");
+}
+
 void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
                                                picojson::value& output) {
   picojson::value error;
@@ -215,6 +239,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
     GetNetwork(error, data);
   } else if (prop == "WIFI_NETWORK") {
     GetWifiNetwork(error, data);
+  } else if (prop == "CELLULAR_NETWORK") {
+    GetCellularNetwork(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }

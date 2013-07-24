@@ -13,6 +13,7 @@
 <button id="locale_btn">Locale</button>
 <button id="network_btn">Network</button>
 <button id="wifi_network_btn">Wifi Network</button>
+<button id="cellular_network_btn">Cellular Network</button>
 </body>
 
 <script>
@@ -129,6 +130,25 @@ handle("wifi_network_btn", function() {
                      '\n ipAddress: ' + wifi.ipAddress +
                      '\n ipv6Address: ' + wifi.ipv6Address +
                      '\n signalStrength: ' + wifi.signalStrength;
+    },
+    onErrorCallback);
+});
+
+handle("cellular_network_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "CELLULAR_NETWORK",
+    function(cellular) {
+      output.value = '\n status: ' + cellular.status +
+                     '\n apn: ' + cellular.apn +
+                     '\n ipAddress: ' + cellular.ipAddress +
+                     '\n ipv6Address: ' + cellular.ipv6Address +
+                     '\n mcc: ' + cellular.mcc +
+                     '\n mnc: ' + cellular.mnc +
+                     '\n cellId: ' + cellular.cellId +
+                     '\n lac: ' + cellular.lac +
+                     '\n isRoaming: ' + cellular.isRoaming +
+                     '\n isFlightMode: ' + cellular.isFlightMode +
+                     '\n imei: ' + cellular.imei;
     },
     onErrorCallback);
 });
