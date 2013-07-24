@@ -7,6 +7,7 @@
 <button id="cpu_btn">CPU</button>
 <button id="storage_btn">Storage</button>
 <button id="display_btn">Display</button>
+<button id="device_orientation_btn">Device Orientation</button>
 </body>
 
 <script>
@@ -70,6 +71,16 @@ handle("display_btn", function() {
                      '\n physicalWidth: ' + display.physicalWidth +
                      '\n physicalHeight: ' + display.physicalHeight +
                      '\n brightness: ' + display.brightness;
+    },
+    onErrorCallback);
+});
+
+handle("device_orientation_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "DEVICE_ORIENTATION ",
+    function(orientation) {
+      output.value = '\n status: ' + orientation.status +
+                     '\n isAutoRotation: ' + orientation.isAutoRotation;
     },
     onErrorCallback);
 });

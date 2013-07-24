@@ -32,6 +32,8 @@ class SystemInfoContext {
                   picojson::value& data);
   void GetDisplay(picojson::value& error,
                   picojson::value& data);
+  void GetDeviceOrientation(picojson::value& error,
+                            picojson::value& data);
 
   ContextAPI* api_;
 };
