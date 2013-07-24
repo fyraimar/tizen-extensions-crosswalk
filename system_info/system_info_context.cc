@@ -209,7 +209,7 @@ void SystemInfoContext::GetCellularNetwork(picojson::value& error,
 }
 
 void SystemInfoContext::GetSIM(picojson::value& error,
-                                           picojson::value& data) {
+                               picojson::value& data) {
   picojson::object& error_map = error.get<picojson::object>();
   picojson::object& data_map = data.get<picojson::object>();
 
@@ -222,6 +222,19 @@ void SystemInfoContext::GetSIM(picojson::value& error,
   data_map["mnc"] = picojson::value((double)51);
   data_map["msin"] = picojson::value("China Mobile - msin");
   data_map["spn"] = picojson::value("China Mobile - spn");
+  error_map["message"] = picojson::value("");
+
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get Display failed.");
+}
+
+void SystemInfoContext::GetPeripheral(picojson::value& error,
+                                      picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  data_map["isVideoOutputOn"] = picojson::value(true);
   error_map["message"] = picojson::value("");
 
   // uncomment out below line to try error
@@ -263,6 +276,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
     GetCellularNetwork(error, data);
   } else if (prop == "SIM") {
     GetSIM(error, data);
+  } else if (prop == "PERIPHERAL") {
+    GetPeripheral(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }

@@ -15,6 +15,7 @@
 <button id="wifi_network_btn">Wifi Network</button>
 <button id="cellular_network_btn">Cellular Network</button>
 <button id="sim_btn">SIM</button>
+<button id="peripheral_btn">Peripheral</button>
 </body>
 
 <script>
@@ -169,4 +170,14 @@ handle("sim_btn", function() {
     },
     onErrorCallback);
 });
+
+handle("peripheral_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "PERIPHERAL",
+    function(peripheral) {
+      output.value = '\n isVideoOutputOn: ' + peripheral.isVideoOutputOn;
+    },
+    onErrorCallback);
+});
+
 </script>

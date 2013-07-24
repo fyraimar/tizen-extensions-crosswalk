@@ -46,6 +46,8 @@ class SystemInfoContext {
                           picojson::value& data);
   void GetSIM(picojson::value& error,
               picojson::value& data);
+  void GetPeripheral(picojson::value& error,
+                     picojson::value& data);
 
   ContextAPI* api_;
 };
