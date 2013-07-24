@@ -37,7 +37,9 @@ class SystemInfoContext {
   void GetBuild(picojson::value& error,
                 picojson::value& data);
   void GetLocale(picojson::value& error,
-                picojson::value& data);
+                 picojson::value& data);
+  void GetNetwork(picojson::value& error,
+                  picojson::value& data);
 
   ContextAPI* api_;
 };

@@ -11,6 +11,7 @@
 <button id="build_btn">Build</button>
 <br>
 <button id="locale_btn">Locale</button>
+<button id="network_btn">Network</button>
 </body>
 
 <script>
@@ -105,6 +106,15 @@ handle("locale_btn", function() {
     function(locale) {
       output.value = '\n language: ' + locale.language +
                      '\n country: ' + locale.country;
+    },
+    onErrorCallback);
+});
+
+handle("network_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "NETWORK",
+    function(network) {
+      output.value = '\n networkType: ' + network.networkType;
     },
     onErrorCallback);
 });
