@@ -5,6 +5,7 @@
 <br>
 <button id="battery_btn">Battery</button>
 <button id="cpu_btn">CPU</button>
+<button id="storage_btn">Storage</button>
 </body>
 
 <script>
@@ -36,6 +37,23 @@ handle("cpu_btn", function() {
     "CPU",
     function(cpu) {
       output.value = '\n The CPU load is ' + cpu.load + '\n';
+    },
+    onErrorCallback);
+});
+
+handle("storage_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "STORAGE",
+    function(storage) {
+      output.value = '\n There are ' + storage.units.length + ' storage units.\n';
+      for (i=0; i< storage.units.length; i++) {
+        output.value += '\n storage[' + i + ']:'
+        output.value += '\n\t type: ' + storage.units[i].type +
+                        '\n\t capacity: ' + storage.units[i].capacity +
+                        '\n\t availableCapacity: ' + storage.units[i].availableCapacity +
+                        '\n\t isRemovable: ' + storage.units[i].isRemovable +
+                        '\n\t isRemoveable: ' + storage.units[i].isRemoveable + '\n';
+      }
     },
     onErrorCallback);
 });

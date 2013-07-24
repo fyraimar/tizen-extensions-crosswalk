@@ -36,7 +36,7 @@ void SystemInfoContext::GetBattery(picojson::value& error,
   data_map["isCharging"] = picojson::value(false);
   error_map["message"] = picojson::value("");
 
-  // delete this so that the battery value can be get from JS
+  // delete this so that the value can be get from JS
   error_map["message"] = picojson::value("Get battery failed.");
 }
 
@@ -49,7 +49,48 @@ void SystemInfoContext::GetCPU(picojson::value& error,
   data_map["load"] = picojson::value(0.3);
   error_map["message"] = picojson::value("");
 
-  // delete this so that the battery value can be get from JS
+  // delete this so that the value can be get from JS
+  error_map["message"] = picojson::value("Get CPU failed.");
+}
+
+void SystemInfoContext::GetStorage(picojson::value& error,
+                                   picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  picojson::value units = picojson::value(picojson::array(2));
+  picojson::array& units_arr = units.get<picojson::array>();
+
+  picojson::value unit1 = picojson::value(picojson::object());
+  picojson::object& unit1_map = unit1.get<picojson::object>();
+  unit1_map["type"] = picojson::value("INTERNAL");
+  // 20g
+  unit1_map["capacity"] = picojson::value((double)20971520);
+  // 5g
+  unit1_map["availableCapacity"] = picojson::value((double)5242880);
+  unit1_map["isRemovable"] = picojson::value(true);
+  // deperacated, same as isRemovable
+  unit1_map["isRemoveable"] = picojson::value(true);
+  units_arr[0] = unit1;
+
+  picojson::value unit2 = picojson::value(picojson::object());
+  picojson::object& unit2_map = unit2.get<picojson::object>();
+  unit2_map["type"] = picojson::value("USB_HOST");
+  // 10g
+  unit2_map["capacity"] = picojson::value((double)10485760);
+  // 2g
+  unit2_map["availableCapacity"] = picojson::value((double)2097152);
+  unit2_map["isRemovable"] = picojson::value(true);
+  // deperacated, same as isRemovable
+  unit2_map["isRemoveable"] = picojson::value(true);
+  units_arr[1] = unit2;
+
+  data_map["units"] = units;
+  error_map["message"] = picojson::value("");
+
+  // delete this so that the value can be get from JS
+  //error_map["message"] = picojson::value("Get Storage failed.");
 }
 
 void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
@@ -69,6 +110,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
     GetBattery(error, data);
   } else if (prop == "CPU") {
     GetCPU(error, data);
+  } else if (prop == "STORAGE") {
+    GetStorage(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }
