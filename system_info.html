@@ -14,6 +14,7 @@
 <button id="network_btn">Network</button>
 <button id="wifi_network_btn">Wifi Network</button>
 <button id="cellular_network_btn">Cellular Network</button>
+<button id="sim_btn">SIM</button>
 </body>
 
 <script>
@@ -153,4 +154,19 @@ handle("cellular_network_btn", function() {
     onErrorCallback);
 });
 
+handle("sim_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "SIM",
+    function(sim) {
+      output.value = '\n state: ' + sim.state +
+                     '\n operatorName: ' + sim.operatorName +
+                     '\n msisdn: ' + sim.msisdn +
+                     '\n iccid: ' + sim.iccid +
+                     '\n mcc: ' + sim.mcc +
+                     '\n mnc: ' + sim.mnc +
+                     '\n msin: ' + sim.msin +
+                     '\n spn: ' + sim.spn;
+    },
+    onErrorCallback);
+});
 </script>
