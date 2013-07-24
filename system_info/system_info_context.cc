@@ -40,6 +40,18 @@ void SystemInfoContext::GetBattery(picojson::value& error,
   error_map["message"] = picojson::value("Get battery failed.");
 }
 
+void SystemInfoContext::GetCPU(picojson::value& error,
+                               picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  data_map["load"] = picojson::value(0.3);
+  error_map["message"] = picojson::value("");
+
+  // delete this so that the battery value can be get from JS
+}
+
 void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
                                                picojson::value& output) {
   picojson::value error;
@@ -55,6 +67,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
   prop = input.get("prop").to_str();
   if (prop == "BATTERY") {
     GetBattery(error, data);
+  } else if (prop == "CPU") {
+    GetCPU(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }

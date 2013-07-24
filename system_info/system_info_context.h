@@ -26,6 +26,8 @@ class SystemInfoContext {
                               picojson::value& output);
   void GetBattery(picojson::value& error,
                   picojson::value& data);
+  void GetCPU(picojson::value& error,
+              picojson::value& data);
 
   ContextAPI* api_;
 };

@@ -4,6 +4,7 @@
 <textarea cols=50 rows=20 id="output"></textarea>
 <br>
 <button id="battery_btn">Battery</button>
+<button id="cpu_btn">CPU</button>
 </body>
 
 <script>
@@ -26,6 +27,15 @@ handle("battery_btn", function() {
       output.value = '\n The battery level is ' + battery.level + '\n';
       var is_charging = battery.isCharging ? 'charging' : 'not charging';
       output.value += '\n The battery is ' + is_charging + '\n';
+    },
+    onErrorCallback);
+});
+
+handle("cpu_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "CPU",
+    function(cpu) {
+      output.value = '\n The CPU load is ' + cpu.load + '\n';
     },
     onErrorCallback);
 });
