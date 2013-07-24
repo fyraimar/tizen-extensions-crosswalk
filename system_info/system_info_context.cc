@@ -36,8 +36,8 @@ void SystemInfoContext::GetBattery(picojson::value& error,
   data_map["isCharging"] = picojson::value(false);
   error_map["message"] = picojson::value("");
 
-  // delete this so that the value can be get from JS
-  error_map["message"] = picojson::value("Get battery failed.");
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get battery failed.");
 }
 
 void SystemInfoContext::GetCPU(picojson::value& error,
@@ -49,8 +49,8 @@ void SystemInfoContext::GetCPU(picojson::value& error,
   data_map["load"] = picojson::value(0.3);
   error_map["message"] = picojson::value("");
 
-  // delete this so that the value can be get from JS
-  error_map["message"] = picojson::value("Get CPU failed.");
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get CPU failed.");
 }
 
 void SystemInfoContext::GetStorage(picojson::value& error,
@@ -89,8 +89,27 @@ void SystemInfoContext::GetStorage(picojson::value& error,
   data_map["units"] = units;
   error_map["message"] = picojson::value("");
 
-  // delete this so that the value can be get from JS
-  //error_map["message"] = picojson::value("Get Storage failed.");
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get Storage failed.");
+}
+
+void SystemInfoContext::GetDisplay(picojson::value& error,
+                                   picojson::value& data) {
+  picojson::object& error_map = error.get<picojson::object>();
+  picojson::object& data_map = data.get<picojson::object>();
+
+  // FIXME(halton): Add actual implementation
+  data_map["resolutionWidth"] = picojson::value((double)1280);
+  data_map["resolutionHeight"] = picojson::value((double)1024);
+  data_map["dotsPerInchWidth"] = picojson::value((double)567);
+  data_map["dotsPerInchHeight"] = picojson::value((double)789);
+  data_map["physicalWidth"] = picojson::value((double)456);
+  data_map["physicalHeight"] = picojson::value((double)345);
+  data_map["brightness"] = picojson::value(0.5);
+  error_map["message"] = picojson::value("");
+
+  // uncomment out below line to try error
+  // error_map["message"] = picojson::value("Get Display failed.");
 }
 
 void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
@@ -112,6 +131,8 @@ void SystemInfoContext::HandleGetPropertyValue(const picojson::value& input,
     GetCPU(error, data);
   } else if (prop == "STORAGE") {
     GetStorage(error, data);
+  } else if (prop == "DISPLAY") {
+    GetDisplay(error, data);
   } else {
     error_map["message"] = picojson::value("Not supportted property " + prop);
   }

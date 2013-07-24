@@ -6,6 +6,7 @@
 <button id="battery_btn">Battery</button>
 <button id="cpu_btn">CPU</button>
 <button id="storage_btn">Storage</button>
+<button id="display_btn">Display</button>
 </body>
 
 <script>
@@ -58,4 +59,18 @@ handle("storage_btn", function() {
     onErrorCallback);
 });
 
+handle("display_btn", function() {
+  tizen.systeminfo.getPropertyValue(
+    "DISPLAY",
+    function(display) {
+      output.value = '\n resolutionWidth: ' + display.resolutionWidth +
+                     '\n resolutionHeight: ' + display.resolutionHeight +
+                     '\n dotsPerInchWidth: ' + display.dotsPerInchWidth +
+                     '\n dotsPerInchHeight: ' + display.dotsPerInchHeight +
+                     '\n physicalWidth: ' + display.physicalWidth +
+                     '\n physicalHeight: ' + display.physicalHeight +
+                     '\n brightness: ' + display.brightness;
+    },
+    onErrorCallback);
+});
 </script>
