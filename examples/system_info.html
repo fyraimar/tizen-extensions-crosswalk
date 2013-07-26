@@ -59,8 +59,8 @@ handle("storage_btn", function() {
       for (i=0; i< storage.units.length; i++) {
         output.value += '\n storage[' + i + ']:'
         output.value += '\n\t type: ' + storage.units[i].type +
-                        '\n\t capacity: ' + storage.units[i].capacity +
-                        '\n\t availableCapacity: ' + storage.units[i].availableCapacity +
+                        '\n\t capacity: ' + storage.units[i].capacity + ' bytes' +
+                        '\n\t availableCapacity: ' + storage.units[i].availableCapacity + ' bytes' +
                         '\n\t isRemovable: ' + storage.units[i].isRemovable +
                         '\n\t isRemoveable: ' + storage.units[i].isRemoveable + '\n';
       }
