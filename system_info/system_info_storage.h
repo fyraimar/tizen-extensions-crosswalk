@@ -27,8 +27,6 @@ class SysInfoStorage {
                   const std::string& mnt_dir,
                   picojson::value& error,
                   picojson::value& unit);
-  std::string GetDevProperty(struct udev_device* dev,
-                             const std::string& attr);
   std::string GetDevPathFromMountPath(const std::string& mnt_path);
 
   struct udev* _udev;

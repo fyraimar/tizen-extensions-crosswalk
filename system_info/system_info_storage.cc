@@ -9,6 +9,7 @@
 #include <mntent.h>
 
 #include "common/picojson.h"
+#include "system_info/system_info_utils.h"
 
 #define MOUNT_TABLE "/proc/mounts"
 
@@ -63,18 +64,6 @@ void SysInfoStorage::Update(picojson::value& error,
   error_map["message"] = picojson::value("");
 }
 
-std::string SysinfoStorage::GetDevProperty(struct udev_device* dev,
-                                           const std::string& attr) {
-  struct udev_list_entry *attr_list_entry, *attr_entry;
-
-  attr_list_entry = udev_device_get_properties_list_entry(dev);
-  attr_entry = udev_list_entry_get_by_name(attr_list_entry, attr.c_str());
-  if (0 == attr_entry)
-   return NULL;
-
-  return std::string(udev_list_entry_get_value(attr_entry));
-}
-                              
 std::string
 SysInfoStorage::GetDevPathFromMountPath(const std::string& mnt_path) {
   struct udev_enumerate *enumerate;
@@ -97,7 +86,7 @@ SysInfoStorage::GetDevPathFromMountPath(const std::string& mnt_path) {
     path = udev_list_entry_get_name(dev_list_entry);
     dev = udev_device_new_from_syspath(_udev, path);
 
-    dev_path = GetDevProperty(dev, "DEVPATH");
+    dev_path = system_info::get_udev_property(dev, "DEVPATH");
     if (dev_path.empty()) {
       udev_device_unref(dev);
       udev_enumerate_unref(enumerate);
@@ -107,14 +96,14 @@ SysInfoStorage::GetDevPathFromMountPath(const std::string& mnt_path) {
     // Append /sys
     dev_path = "/sys" + dev_path;
 
-    str = GetDevProperty(dev, "DEVNAME");
+    str = system_info::get_udev_property(dev, "DEVNAME");
     if (!str.empty() && (str == mnt_path)) {
       udev_device_unref(dev);
       udev_enumerate_unref(enumerate);
       return dev_path;
     }
 
-    str = GetDevProperty(dev, "DEVLINKS");
+    str = system_info::get_udev_property(dev, "DEVLINKS");
     if (!str.empty() && (std::string::npos != str.find(mnt_path))) {
       udev_device_unref(dev);
       udev_enumerate_unref(enumerate);
